@@ -22,6 +22,19 @@ X = [ones(m, 1) X];
 %               logistic regression classifiers with regularization
 %               parameter lambda. 
 %
+
+for c = 1:num_labels
+   
+    initial_theta = zeros(n+1, 1);
+    options = optimset('GradObj', 'on', 'MaxIter', 150);
+    [theta] = fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), initial_theta, options);
+    
+    size(theta)
+    
+    all_theta(c,:) = theta;
+    
+end
+
 % Hint: theta(:) will return a column vector.
 %
 % Hint: You can use y == c to obtain a vector of 1's and 0's that tell use 
