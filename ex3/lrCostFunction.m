@@ -18,10 +18,15 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
-hTheta = sigmoid([ones(size(X,1),1) X] * theta');
-bigY = repmat(y, 1, size(hTheta,2));
+hTheta = sigmoid(X * theta);
 
-J = (1/m) * sum( -bigY .* log(hTheta) - (1 - bigY) .* log(1 - hTheta));
+J = (1/m) * sum( -y' * log(hTheta) - (1 - y)' * log(1 - hTheta));
+
+% Regularisation
+%J = J + (lambda * sum(theta.^2) / (2 * m));
+
+foo = lambda * sum(theta(2:end).*theta(2:end)) / (2*m);
+J = J + foo;
 
 %
 % Hint: The computation of the cost function and gradients can be
@@ -42,12 +47,11 @@ J = (1/m) * sum( -bigY .* log(hTheta) - (1 - bigY) .* log(1 - hTheta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-size(X')
-size(hTheta)
-
 grad = (1/m) * X' * (hTheta - repmat(y, 1, size(hTheta,2)));
-
-
+temp = theta;
+temp(1) = 0;
+grad = grad + ((lambda/m) * temp );
+%grad = grad(2:end,:);
 % =============================================================
 
 grad = grad(:);
