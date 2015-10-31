@@ -69,7 +69,6 @@ a2 = sigmoid(z2);
 
 % Theta2 prob 10x26
 % a2 25xrecs
-size(a2)
 z3 = Theta2 * [ones(1, size(a2,2)); a2];
 a3 = sigmoid(z3);
 
@@ -78,6 +77,16 @@ newY = zeros(size(y,1), num_labels);
 for i = 1:size(y,1)
     newY(i, y(i)) = 1;
 end
+
+% Compute cost for each training sample
+totalCost = 0;
+for i = 1:size(X,1);
+    % Compute cost of col i of a3 compared to row i of y
+    smallJ = sum(-newY(i,:) * log(a3(:,i)) - (1-newY(i,:))*log(1-a3(:,i)));
+    totalCost = totalCost+smallJ;
+end
+
+J = totalCost / m;
 
 %newY
 %J = (1/m) * sum(
