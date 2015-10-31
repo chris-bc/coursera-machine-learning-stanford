@@ -87,22 +87,23 @@ for i = 1:size(X,1);
 end
 
 J = totalCost / m;
+% Todo: Check if the loop can be removed by just summing over X
 
 % regularisation
 J = J + ( (lambda/(2*m)) * (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))));
 
+% Gradient
+for i = 1:m
+    % Output is in col i of a3, correct value in row i of y
+    delta3 = a3(:,i) - newY(i,:)';
+    delta2 = (Theta2(:,2:end)' * delta3) .* sigmoidGradient(z2(:,i));
+    Theta2_grad = Theta2_grad + [zeros(size(Theta2_grad,1),1) delta3 * a2(:,i)'];
+    
+    Theta1_grad = Theta1_grad + [zeros(size(Theta1_grad,1),1) delta2 * X(i,:)];
+end
 
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = Theta1_grad ./ m;
+Theta2_grad = Theta2_grad ./ m;
 
 % -------------------------------------------------------------
 
