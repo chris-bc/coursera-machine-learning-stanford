@@ -62,8 +62,25 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Compute cost
+% prob recs x params. Theta1 prob 25x401
+z2 = Theta1 * [ones(size(X,1),1) X]';
+a2 = sigmoid(z2);
 
+% Theta2 prob 10x26
+% a2 25xrecs
+size(a2)
+z3 = Theta2 * [ones(1, size(a2,2)); a2];
+a3 = sigmoid(z3);
 
+% Vectorise y
+newY = zeros(size(y,1), num_labels);
+for i = 1:size(y,1)
+    newY(i, y(i)) = 1;
+end
+
+%newY
+%J = (1/m) * sum(
 
 
 
