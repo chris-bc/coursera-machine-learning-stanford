@@ -64,12 +64,13 @@ Theta2_grad = zeros(size(Theta2));
 
 % Compute cost
 % prob recs x params. Theta1 prob 25x401
-z2 = Theta1 * [ones(size(X,1),1) X]';
-a2 = sigmoid(z2);
+a1 = [ones(size(X,1),1) X]';
+z2 = Theta1 * a1;
+a2 = [ones(1,size(z2,2)); sigmoid(z2)];
 
 % Theta2 prob 10x26
 % a2 25xrecs
-z3 = Theta2 * [ones(1, size(a2,2)); a2];
+z3 = Theta2 * a2;
 a3 = sigmoid(z3);
 
 % Vectorise y
@@ -97,13 +98,12 @@ for i = 1:m
     % Output is in col i of a3, correct value in row i of y
     delta3 = a3(:,i) - newY(i,:)';
     delta2 = (Theta2(:,2:end)' * delta3) .* sigmoidGradient(z2(:,i));
-    Theta2_grad = Theta2_grad + [zeros(size(Theta2_grad,1),1) delta3 * a2(:,i)'];
-    
-    Theta1_grad = Theta1_grad + [zeros(size(Theta1_grad,1),1) delta2 * X(i,:)];
+    Theta2_grad = Theta2_grad + [delta3 * a2(:,i)'];
+    Theta1_grad = Theta1_grad + [delta2 * a1(:,i)'];
 end
 
-Theta1_grad = Theta1_grad ./ m;
-Theta2_grad = Theta2_grad ./ m;
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
 
 % -------------------------------------------------------------
 
