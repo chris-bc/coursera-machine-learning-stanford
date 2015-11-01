@@ -105,6 +105,15 @@ end
 Theta1_grad = Theta1_grad / m;
 Theta2_grad = Theta2_grad / m;
 
+% Regularisation
+Theta1_filter = Theta1;
+Theta1_filter(:,1) = zeros(size(Theta1,1),1);
+Theta2_filter = Theta2;
+Theta2_filter(:,1) = zeros(size(Theta2,1),1);
+
+Theta1_grad = Theta1_grad + (lambda / m) .* Theta1_filter;
+Theta2_grad = Theta2_grad + (lambda / m) .* Theta2_filter;
+
 % -------------------------------------------------------------
 
 % =========================================================================
