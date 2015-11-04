@@ -19,15 +19,18 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% theta is 2x1, X is 12x2
+% hTheta 
 
+J = (1 / (2*m)) * sum((X * theta - y).^2);
+%J = (1 / (2*m)) * sum(((theta' * X')' - y).^2); % same result
+regTheta = theta;
+regTheta(1) = 0;
+J = J + sum(regTheta.^2);
 
-
-
-
-
-
-
-
+% Xtheta-y is 12x1
+% result needs to be 2x1
+grad = (1 / m) * sum((X * theta - y)' * X)' + (lambda / (2*m)) .* regTheta;
 
 
 % =========================================================================
