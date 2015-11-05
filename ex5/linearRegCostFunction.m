@@ -26,12 +26,17 @@ J = (1 / (2*m)) * sum((X * theta - y).^2);
 %J = (1 / (2*m)) * sum(((theta' * X')' - y).^2); % same result
 regTheta = theta;
 regTheta(1) = 0;
-J = J + sum(regTheta.^2);
+J = J + (lambda / (2*m)) * sum(regTheta.^2);
 
 % Xtheta-y is 12x1
 % result needs to be 2x1
-grad = (1 / m) * sum((X * theta - y)' * X)' + (lambda / (2*m)) .* regTheta;
 
+error = X * theta - y;
+%error = repmat(error, 1, size(X,2));
+
+%grad = (1 / m) * sum(error .* X);
+grad = (1 / m) * (X' * error);
+grad = grad + (lambda / m) .* regTheta;
 
 % =========================================================================
 
