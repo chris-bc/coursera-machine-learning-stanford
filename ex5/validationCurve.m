@@ -17,6 +17,15 @@ error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
 
 % ====================== YOUR CODE HERE ======================
+
+for i = 1:length(lambda_vec)
+    thetas = trainLinearReg(X, y, lambda_vec(i));
+    [J,grad] = linearRegCostFunction(X, y, thetas, 0);
+    error_train(i) = J;
+    [J,grad] = linearRegCostFunction(Xval, yval, thetas, 0);
+    error_val(i) = J;
+end
+
 % Instructions: Fill in this function to return training errors in 
 %               error_train and the validation errors in error_val. The 
 %               vector lambda_vec contains the different lambda parameters 
