@@ -20,12 +20,20 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-
-
-
-
-
+for i = 1:size(X,1)
+    % Find element in centroids closest to X(i)
+    smallestDistance = sum(sum( (X(i,:) - centroids(1,:)) .^ 2));
+    idx(i) = 1;
+    for j = 2:K
+        X(i);
+        centroids(j);
+        testDistance = sum(sum( (X(i,:) - centroids(j,:)) .^ 2));
+        if testDistance < smallestDistance;
+            smallestDistance = testDistance;
+            idx(i) = j
+        end
+    end
+end
 
 % =============================================================
 
