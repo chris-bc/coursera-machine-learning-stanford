@@ -30,7 +30,7 @@ for i = 1:size(X,1)
         testDistance = sum(sum( (X(i,:) - centroids(j,:)) .^ 2));
         if testDistance < smallestDistance;
             smallestDistance = testDistance;
-            idx(i) = j
+            idx(i) = j;
         end
     end
 end
